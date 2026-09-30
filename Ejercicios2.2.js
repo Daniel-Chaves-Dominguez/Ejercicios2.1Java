@@ -78,10 +78,10 @@ console.log("\nEjercicio 3: for");
 // ('n') y devuelva la suma de todos los números desde 1 hasta 'n' (incluido).
 // Utiliza un bucle 'for' y una variable 'let' para acumular el resultado.
 
-function sumUpTo(int) {
+function sumUpTo(n) {
     let suma = 0;
 
-    for (let i = 1;i <= int; i++) {
+    for (let i = 1;i <= n; i++) {
         suma = suma + i;
     }
     return suma;
@@ -96,12 +96,12 @@ console.log("\nEjercicio 4: for con arrays");
 // ('numbers') y devuelva el mayor de ellos. Recorre el array con un 'for'
 // clásico (con índice) y NO uses Math.max.
 
-function findMax(array) {
-    let mayor = array[0];
+function findMax(numbers) {
+    let mayor = numbers[0];
 
-    for (let i = 1; i < array.length; i++) {
-        if (array[i] > mayor) {
-            mayor = array[i];
+    for (let i = 1; i < numbers.length; i++) {
+        if (numbers[i] > mayor) {
+            mayor = numbers[i];
         }
     }
     return mayor;
@@ -159,13 +159,13 @@ console.log("\nEjercicio 7: while");
 // Utiliza un bucle 'while' dividiendo el número entre 10 (con Math.floor)
 // hasta que llegue a 0. Ojo: el número 0 tiene 1 cifra.
 
-function countDigits(int) {
-    if (int === 0) {
+function countDigits(number) {
+    if (number === 0) {
         return 1;
     }
     let contador = 0;
-    while (int > 0) {
-        int = Math.floor(int / 10);
+    while (number > 0) {
+        int = Math.floor(number / 10);
         contador++;
     }
     return contador;
@@ -183,7 +183,16 @@ console.log("\nEjercicio 8: break");
 // Utiliza un bucle y la sentencia 'break' para dejar de buscar en cuanto lo
 // encuentres (guarda el resultado en una variable 'let').
 
-function findFirstNegativeIndex()
+function findFirstNegativeIndex(numbers) {
+    let index = -1;
+    for(let i = 0; i < numbers.length; i++) {
+        if (numbers[i] < 0) {
+            index = i;
+            break;
+        }
+    }
+    return index;
+}
 
 console.log(findFirstNegativeIndex([4, 7, -2, 5, -9])); // Debería mostrar: 2
 console.log(findFirstNegativeIndex([1, 2, 3]));         // Debería mostrar: -1
@@ -195,7 +204,16 @@ console.log("\nEjercicio 9: continue");
 // Utiliza un bucle 'for...of' y la sentencia 'continue' para saltarte los
 // números pares.
 
-//Tu código aquí
+function sumOddNumbers(numbers) {
+    let sum = 0;
+    for (const n of numbers) {
+        if (n % 2 === 0) {
+            continue;
+        }
+        sum += n;
+    }
+    return sum;
+}
 
 console.log(sumOddNumbers([1, 2, 3, 4, 5])); // Debería mostrar: 9
 console.log(sumOddNumbers([2, 4, 6]));       // Debería mostrar: 0
@@ -207,7 +225,13 @@ console.log("\nEjercicio 10: forEach");
 // Utiliza el método 'forEach' y 'push' sobre un array 'result' declarado
 // con 'const'. El array original no debe modificarse.
 
-// Tu código aquí
+function doubleAll(numbers) {
+    const result = [];
+    numbers.forEach((n) => {
+        result.push(n * 2);
+    });
+    return result;
+}
 
 console.log(doubleAll([1, 2, 3])); // Debería mostrar: [ 2, 4, 6 ]
 console.log(doubleAll([]));        // Debería mostrar: []

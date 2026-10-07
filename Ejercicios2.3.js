@@ -19,7 +19,7 @@ console.log("\nEjercicio 2: Parámetros por defecto");
 // con valor por defecto "guest", y devuelva el texto "Hola, <name>".
 
 function greetUser (name = "guest") {
-    return "Hola, " + name;
+    return `Hola, ${name}`;
 }
 
 console.log(greetUser("Marta")); // Debería mostrar: 'Hola, Marta'
@@ -144,11 +144,15 @@ console.log("\nEjercicio 10: Librería propia");
 // (No hace falta usar 'export'/'import', basta con el objeto en este archivo).
 
 const mathUtils = {
-    isEven (number) {
+    isEven(number) {
         return number % 2 === 0;
     },
-    average (numbers) {
-        return numbers.reduce((sum, n) => sum + n, 0) / numbers.length;
+    average(numbers) {
+        sum = 0.0;
+        for (let number of numbers){
+            sum += number;
+        }
+        return sum / numbers.length;
     }
 };
 

@@ -148,7 +148,7 @@ const mathUtils = {
         return number % 2 === 0;
     },
     average(numbers) {
-        sum = 0.0;
+        let sum = 0;
         for (let number of numbers){
             sum += number;
         }

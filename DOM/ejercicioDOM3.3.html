@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicios de DOM 3.3</title>
+</head>
+<body>
+    <h1>Tema 3.3 Introducción al DOM</h1>
+
+    <!-- ==================== BLOQUE 1 ==================== -->
+    <h2>Bloque 1: Selección y modificación básica</h2>
+
+    <section>
+        <h3>Ejercicio 1: Interruptor de estado</h3>
+        <p><em>Al pulsar el botón, el párrafo pasa a "Estado: Conectado" en verde y negrita, y el botón pasa a "Conectado".</em></p>
+
+        <p id="estado">Estado: Desconectado</p>
+        <button id="btnToggle">Conectar</button>
+
+    </section>
+    <hr>
+
+    <section>
+        <h3>Ejercicio 2: Vista previa de tarjeta en tiempo real</h3>
+        <p><em>Lo que escribes en el nombre aparece en la tarjeta; el color elegido cambia su fondo.</em></p>
+
+        <input type="text" id="inputNombre" placeholder="Escribe tu nombre...">
+        <input type="color" id="inputColor">
+        <div id="tarjeta" style="margin-top: 10px; padding: 20px; border: 1px solid black;">Tu nombre aparecerá aquí</div>
+
+    </section>
+    <hr>
+
+    <section>
+        <h3>Ejercicio 3: Validador de contraseña</h3>
+        <p><em>0 caracteres: negro / menos de 8: rojo "débil" / 8 o más: verde "segura".</em></p>
+
+        <input type="password" id="passwordInput" placeholder="Mínimo 8 caracteres">
+        <p id="mensajeSeguridad">Introduce una contraseña</p>
+
+    </section>
+    <hr>
+
+    <!-- ==================== BLOQUE 2 ==================== -->
+    <h2>Bloque 2: Creación, inserción y eliminación de elementos</h2>
+
+    <section>
+        <h3>Ejercicio 4: Generador de etiquetas (Tags)</h3>
+        <p><em>Al pulsar Añadir se crea un span gris con el texto dentro del contenedor y se limpia el input.</em></p>
+
+        <input type="text" id="tagInput" placeholder="Añadir etiqueta...">
+        <button id="btnAddTag">Añadir</button>
+        <div id="tagContainer" style="margin-top: 10px;"></div>
+
+    </section>
+    <hr>
+
+    <section>
+        <h3>Ejercicio 5: Lista de la compra con borrado</h3>
+        <p><em>Cada producto se añade con un botón "X" que lo elimina (delegación de eventos).</em></p>
+
+        <input id="productoInput" placeholder="Producto...">
+        <button id="btnAgregar">Agregar</button>
+        <ul id="listaCompra"></ul>
+
+    </section>
+    <hr>
+
+    <section>
+        <h3>Ejercicio 6: Historial de clics con límite</h3>
+        <p><em>Cada clic añade la hora actual a la lista; nunca más de 5 registros.</em></p>
+
+        <button id="btnRegistrar">Registrar Acción</button>
+        <ol id="historial"></ol>
+
+    </section>
+    <hr>
+
+    <!-- ==================== BLOQUE 3 ==================== -->
+    <h2>Bloque 3: Colecciones de nodos, búsqueda y filtros</h2>
+
+    <section>
+        <h3>Ejercicio 7: Resaltador de palabras clave</h3>
+        <p><em>5 párrafos con clase "noticia"; el botón resalta los que contienen "JavaScript".</em></p>
+
+        <p class="noticia">JavaScript se consolida como el lenguaje más usado en desarrollo web.</p>
+        <p class="noticia">El Real Madrid gana la final de la Champions en la prórroga.</p>
+        <p class="noticia">Nueva versión de javascript trae mejoras en el rendimiento.</p>
+        <p class="noticia">Rafa Nadal recibe un homenaje en Roland Garros.</p>
+        <p class="noticia">Los frameworks de JAVASCRIPT más populares de este año.</p>
+        <button id="btnResaltar">Resaltar Noticias de JS</button>
+
+    </section>
+    <hr>
+
+    <section>
+        <h3>Ejercicios 8 y 9: Buscador de productos + contador</h3>
+        <p><em>El buscador oculta los productos que no coinciden y el contador dice cuántos se ven.</em></p>
+
+        <input type="text" id="buscador" placeholder="Buscar producto...">
+        <p id="contadorResultados">Mostrando 8 de 8 productos</p>
+        <ul id="catalogo">
+            <li>Teclado Mecánico</li>
+            <li>Ratón Inalámbrico</li>
+            <li>Monitor 24"</li>
+            <li>Portátil Gaming</li>
+            <li>Auriculares Bluetooth</li>
+            <li>Alfombrilla XL</li>
+            <li>Webcam HD</li>
+            <li>Micrófono USB</li>
+        </ul>
+
+    </section>
+    <hr>
+
+    <section>
+        <h3>Ejercicio 10: Gestor completo de tareas</h3>
+        <p><em>Crear tareas, clic para tachar, segundo clic para borrar, y filtro de búsqueda.</em></p>
+
+        <input id="nuevaTarea" placeholder="Nueva tarea...">
+        <button id="btnCrear">Crear</button>
+        <br><br>
+        <input id="filtroTareas" placeholder="Filtrar tareas...">
+        <ul id="listaTareas"></ul>
+
+    </section>
+
+</body>
+<script>
+
+    // ===== EJERCICIO 1 =====
+    const estado = document.getElementById('estado');
+    const btnToggle = document.getElementById('btnToggle');
+
+    btnToggle.addEventListener('click', () => {
+        estado.textContent = 'Estado: Conectado';
+        estado.style.color = 'green';
+        estado.style.fontWeight = 'bold';
+        btnToggle.textContent = 'Conectado';
+    });
+
+
+    // ===== EJERCICIO 2 =====
+    const inputNombre = document.getElementById('inputNombre');
+    const inputColor = document.getElementById('inputColor');
+    const tarjeta = document.getElementById('tarjeta');
+
+    // 'input' se dispara cada vez que el usuario escribe una letra
+    inputNombre.addEventListener('input', () => {
+        if (inputNombre.value === '') {
+            tarjeta.textContent = 'Tu nombre aparecerá aquí';
+        } else {
+            tarjeta.textContent = inputNombre.value;
+        }
+    });
+
+    inputColor.addEventListener('input', () => {
+        tarjeta.style.backgroundColor = inputColor.value;
+    });
+
+
+    // ===== EJERCICIO 3 =====
+    const passwordInput = document.getElementById('passwordInput');
+    const mensajeSeguridad = document.getElementById('mensajeSeguridad');
+
+    passwordInput.addEventListener('input', () => {
+        const longitud = passwordInput.value.length;
+
+        if (longitud === 0) {
+            mensajeSeguridad.textContent = 'Introduce una contraseña';
+            mensajeSeguridad.style.color = 'black';
+        } else if (longitud < 8) {
+            mensajeSeguridad.textContent = 'Contraseña débil (mínimo 8 caracteres)';
+            mensajeSeguridad.style.color = 'red';
+        } else {
+            mensajeSeguridad.textContent = 'Contraseña segura';
+            mensajeSeguridad.style.color = 'green';
+        }
+    });
+
+
+    // ===== EJERCICIO 4 =====
+    const tagInput = document.getElementById('tagInput');
+    const btnAddTag = document.getElementById('btnAddTag');
+    const tagContainer = document.getElementById('tagContainer');
+
+    btnAddTag.addEventListener('click', () => {
+        const texto = tagInput.value.trim(); // trim() quita los espacios de los lados
+
+        if (texto === '') {
+            return; // si está vacío, no hacemos nada
+        }
+
+        const span = document.createElement('span'); // se crea en memoria (aún no se ve)
+        span.textContent = texto;
+        span.style.backgroundColor = 'lightgray';
+        span.style.padding = '5px 10px';
+        span.style.marginRight = '5px';
+
+        tagContainer.appendChild(span); // ahora sí aparece en la página
+        tagInput.value = '';
+    });
+
+
+    // ===== EJERCICIO 5 =====
+    const productoInput = document.getElementById('productoInput');
+    const btnAgregar = document.getElementById('btnAgregar');
+    const listaCompra = document.getElementById('listaCompra');
+
+    btnAgregar.addEventListener('click', () => {
+        const producto = productoInput.value.trim();
+
+        if (producto === '') {
+            return;
+        }
+
+        const li = document.createElement('li');
+        li.textContent = producto + ' ';
+
+        const botonBorrar = document.createElement('button');
+        botonBorrar.textContent = 'X';
+
+        li.appendChild(botonBorrar);   // el botón dentro del li
+        listaCompra.appendChild(li);   // el li dentro del ul
+        productoInput.value = '';
+    });
+
+    // Delegación: un solo escuchador en el <ul> para todos los botones X
+    listaCompra.addEventListener('click', (event) => {
+        // event.target es el elemento exacto donde se ha hecho clic
+        if (event.target.tagName === 'BUTTON') {
+            event.target.parentElement.remove(); // el padre del botón es el <li>
+        }
+    });
+
+
+    // ===== EJERCICIO 6 =====
+    const btnRegistrar = document.getElementById('btnRegistrar');
+    const historial = document.getElementById('historial');
+
+    btnRegistrar.addEventListener('click', () => {
+        const li = document.createElement('li');
+        li.textContent = 'Acción registrada a las ' + new Date().toLocaleTimeString();
+        historial.appendChild(li);
+
+        const items = document.querySelectorAll('#historial li');
+        if (items.length > 5) {
+            items[0].remove(); // borramos el más antiguo
+        }
+    });
+
+
+    // ===== EJERCICIO 7 =====
+    const btnResaltar = document.getElementById('btnResaltar');
+
+    btnResaltar.addEventListener('click', () => {
+        const noticias = document.querySelectorAll('.noticia');
+
+        noticias.forEach((noticia) => {
+            // pasamos todo a minúsculas para que no importen las mayúsculas
+            if (noticia.textContent.toLowerCase().includes('javascript')) {
+                noticia.style.backgroundColor = '#fff3cd';
+                noticia.style.borderLeft = '4px solid #ffc107';
+            }
+        });
+    });
+
+
+    // ===== EJERCICIOS 8 y 9 =====
+    const buscador = document.getElementById('buscador');
+    const contadorResultados = document.getElementById('contadorResultados');
+
+    buscador.addEventListener('input', () => {
+        const textoBuscado = buscador.value.toLowerCase();
+        const productos = document.querySelectorAll('#catalogo li');
+        let visibles = 0; // ejercicio 9: contador
+
+        productos.forEach((producto) => {
+            if (producto.textContent.toLowerCase().includes(textoBuscado)) {
+                producto.style.display = 'list-item'; // se ve
+                visibles++;
+            } else {
+                producto.style.display = 'none';      // se oculta
+            }
+        });
+
+        // Ejercicio 9: actualizar el contador
+        if (visibles === 0) {
+            contadorResultados.textContent = 'No se encontraron productos';
+            contadorResultados.style.color = 'red';
+        } else {
+            contadorResultados.textContent = 'Mostrando ' + visibles + ' de ' + productos.length + ' productos';
+            contadorResultados.style.color = 'black';
+        }
+    });
+
+
+    // ===== EJERCICIO 10 =====
+    const nuevaTarea = document.getElementById('nuevaTarea');
+    const btnCrear = document.getElementById('btnCrear');
+    const filtroTareas = document.getElementById('filtroTareas');
+    const listaTareas = document.getElementById('listaTareas');
+
+    // 1. Añadir
+    btnCrear.addEventListener('click', () => {
+        const texto = nuevaTarea.value.trim();
+
+        if (texto === '') {
+            return;
+        }
+
+        const li = document.createElement('li');
+        li.textContent = texto;
+        listaTareas.appendChild(li);
+        nuevaTarea.value = '';
+    });
+
+    // 2. Completar / Eliminar (delegación en el <ul>)
+    listaTareas.addEventListener('click', (event) => {
+        if (event.target.tagName !== 'LI') {
+            return; // si no se ha pulsado un <li>, no hacemos nada
+        }
+
+        if (event.target.style.textDecoration === 'line-through') {
+            event.target.remove();                          // 2º clic: borrar
+        } else {
+            event.target.style.textDecoration = 'line-through'; // 1er clic: tachar
+            event.target.style.color = 'gray';
+        }
+    });
+
+    // 3. Filtrar
+    filtroTareas.addEventListener('input', () => {
+        const textoBuscado = filtroTareas.value.toLowerCase();
+        const tareas = document.querySelectorAll('#listaTareas li');
+
+        tareas.forEach((tarea) => {
+            if (tarea.textContent.toLowerCase().includes(textoBuscado)) {
+                tarea.style.display = 'list-item';
+            } else {
+                tarea.style.display = 'none';
+            }
+        });
+    });
+
+</script>
+</html>

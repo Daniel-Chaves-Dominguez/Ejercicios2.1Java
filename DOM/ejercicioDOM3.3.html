@@ -219,11 +219,10 @@
     <hr>
 
     <section>
-        <h3>Ejercicios 8 y 9: Buscador de productos + contador</h3>
-        <p><em>El buscador oculta los productos que no coinciden y el contador dice cuántos se ven.</em></p>
+        <h3>Ejercicio 8: Buscador de productos en catálogo</h3>
+        <p><em>El buscador oculta los productos que no coinciden con lo escrito.</em></p>
 
         <input type="text" id="buscador" placeholder="Buscar producto...">
-        <p id="contadorResultados">Mostrando 8 de 8 productos</p>
         <ul id="catalogo">
             <li>Teclado Mecánico</li>
             <li>Ratón Inalámbrico</li>
@@ -237,11 +236,47 @@
 
         <script>
             const buscador = document.getElementById('buscador');
-            const contadorResultados = document.getElementById('contadorResultados');
 
             buscador.addEventListener('input', () => {
                 const textoBuscado = buscador.value.toLowerCase();
                 const productos = document.querySelectorAll('#catalogo li');
+
+                productos.forEach((producto) => {
+                    if (producto.textContent.toLowerCase().includes(textoBuscado)) {
+                        producto.style.display = 'list-item';
+                    } else {
+                        producto.style.display = 'none';
+                    }
+                });
+            });
+        </script>
+    </section>
+    <hr>
+
+    <section>
+        <h3>Ejercicio 9: Contador de resultados visibles</h3>
+        <p><em>Igual que el 8, pero además el contador dice cuántos productos se ven.</em></p>
+
+        <input type="text" id="buscador9" placeholder="Buscar producto...">
+        <p id="contadorResultados">Mostrando 8 de 8 productos</p>
+        <ul id="catalogo9">
+            <li>Teclado Mecánico</li>
+            <li>Ratón Inalámbrico</li>
+            <li>Monitor 24"</li>
+            <li>Portátil Gaming</li>
+            <li>Auriculares Bluetooth</li>
+            <li>Alfombrilla XL</li>
+            <li>Webcam HD</li>
+            <li>Micrófono USB</li>
+        </ul>
+
+        <script>
+            const buscador9 = document.getElementById('buscador9');
+            const contadorResultados = document.getElementById('contadorResultados');
+
+            buscador9.addEventListener('input', () => {
+                const textoBuscado = buscador9.value.toLowerCase();
+                const productos = document.querySelectorAll('#catalogo9 li');
                 let visibles = 0;
 
                 productos.forEach((producto) => {
